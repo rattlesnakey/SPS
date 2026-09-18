@@ -1,0 +1,76 @@
+models:
+  qwen3_1.7b:
+    name: Qwen/Qwen3-1.7B
+    layers: 28
+    selected_layer: 20
+    tensor_parallel_size: 1
+  qwen3_4b:
+    name: Qwen/Qwen3-4B
+    layers: 36
+    selected_layer: 22
+    tensor_parallel_size: 1
+  qwen3_8b:
+    name: Qwen/Qwen3-8B
+    layers: 36
+    selected_layer: 25
+    tensor_parallel_size: 1
+  qwen3_14b:
+    name: Qwen/Qwen3-14B
+    layers: 40
+    selected_layer: 32
+    tensor_parallel_size: 1
+runtime:
+  dtype: bfloat16
+  enable_thinking: true
+  seed: 0
+  step_delimiter: "\n\n"
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  top_k: 20
+  max_new_tokens: 32768
+candidate:
+  temperature: 1.2
+  num_candidates: 32
+  max_new_tokens: 8192
+uncertainty:
+  entropy_quantile: 0.8
+judge:
+  model: gpt-5.5
+  reasoning_effort: medium
+  workers: 12
+dedup:
+  enabled: true
+  embedding_model: Qwen/Qwen3-Embedding-8B
+  thresholds_path: data/dedup_thresholds.json
+  manual_pairs_path: data/dedup_similar_pairs.jsonl
+  batch_size: 16
+representation:
+  pca_dim: 512
+clustering:
+  state_regions_by_model:
+    qwen3_1.7b: 10
+    qwen3_4b: 8
+    qwen3_8b: 8
+    qwen3_14b: 10
+  state_k_values: [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+  direction_k_values: [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+  direction_clusters_by_model:
+    qwen3_1.7b: [6, 6, 4, 6, 4, 8, 6, 8, 4, 6]
+    qwen3_4b: [6, 6, 6, 4, 6, 6, 8, 6]
+    qwen3_8b: [6, 4, 6, 6, 4, 8, 6, 6]
+    qwen3_14b: [6, 6, 4, 6, 8, 4, 6, 6, 4, 8]
+steering:
+  alpha_min: 0.5
+probe:
+  sample_size: 2000
+  train_fraction: 0.8
+  base_pca_dim: 512
+  min_retained_variance: 0.90
+  depths: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+calibration:
+  dataset: BytedTsinghua-SIA/DAPO-Math-17k
+  split: train
+  sample_size: 200
+paths:
+  output_root: outputs

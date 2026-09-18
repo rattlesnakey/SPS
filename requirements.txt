@@ -1,0 +1,15 @@
+torch>=2.5
+transformers>=4.55
+vllm>=0.10.1.1
+datasets>=3.0
+openai>=2.0
+scikit-learn>=1.5
+sentence-transformers>=5.1
+rouge-score>=0.1.2
+numpy>=1.26.4
+scipy>=1.14
+PyYAML>=6.0
+tqdm>=4.66
+joblib>=1.4
+accelerate>=1.0
+mathruler>=0.1.0
