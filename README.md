@@ -48,7 +48,7 @@ We recommend Python 3.10+ and a CUDA environment compatible with the installed P
      entropy_quantile: 0.8
 
    judge:
-     model: gpt-5.5
+     model: gpt-5.6
      reasoning_effort: medium
    ```
 
